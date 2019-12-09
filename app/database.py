@@ -61,7 +61,8 @@ class Registration(db.Model):
     registration_time = db.Column('registration_time', db.DateTime)
 
     def __init__(self, student_id,
-    full_name, address,
+    full_name,
+    address,
     guardian_name,
     class10_percentage,
     class12_percentage,

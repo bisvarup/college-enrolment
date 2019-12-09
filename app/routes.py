@@ -65,6 +65,13 @@ def logout():
     logout_user()
     return redirect(url_for('index'))
 
+@app.route('/student-enrolment', methods=['GET', 'POST'])
+def studentEnrolment():
+    if request.method == 'GET':
+        return render_template('student-enrolment.html')
+    else:
+        pass
+
 
 @app.errorhandler(404)
 def handle404(e):
