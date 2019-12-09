@@ -2,10 +2,10 @@
 
 **Build a web application to keep track of the student enrollments for a course with the following features.**
 
-    1. Login Page for both students and faculty members
-    2. Data submission page for the students to submit the appropriate documents
-    3. Enable the evaluation and moderation  of the student submissions by the faculty members
-    4. Generate the appropriate reports
+1. Login Page for both students and faculty members
+2. Data submission page for the students to submit the appropriate documents
+3. Enable the evaluation and moderation  of the student submissions by the faculty members
+4. Generate the appropriate reports
 
 ## Steps
 
