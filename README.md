@@ -14,6 +14,10 @@
 
 Last Step: ```pip3 freeze > requirements.txt```
 
+## Resources
+
+1. https://blog.openshift.com/use-flask-login-to-add-user-authentication-to-your-python-application/
+
 ## TODO
 
 configure the .flaskenv it is not working

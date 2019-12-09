@@ -14,7 +14,8 @@ try:
 
     db = SQLAlchemy(app)
 except:
-    print("Error connecting to database!")
+    print("Error connecting to database! Terminating script....")
+    sys.exit()
 
 # Setting up the flask environment from the .flaskenv file
 env = DotEnv()
@@ -22,18 +23,18 @@ env.init_app(app)
 
 login_manager = LoginManager()
 login_manager.init_app(app)
-login_manager.login_view = 'login'
+login_manager.login_view = 'loginStudent'
 
 
 '''
 This import is at the bottom to avoid circular dependency
 '''
 from app import routes
-from app.database import User
+from app.database import Student, Teacher
 
 @login_manager.user_loader
 def load_user(id):
-    return User.query.get(int(id))
+    return Student.query.get(int(id)) or Teacher.query.get(int(id))
 
 @app.before_request
 def before_request():

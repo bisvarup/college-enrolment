@@ -1,24 +1,17 @@
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>College Enrolment</title>
-</head>
-<body>
-    <div class="nav-collapse collapse">
-        <ul class="nav">
-            <li class="active"><a href="/">Home</a></li>
-            {% if g.user.is_authenticated%}
-                <li><a href="/new">New Todo</a></li>
-                <li><a href="{{ url_for('logout') }}">Logout</a></li>
-            {% endif %}
-            {% if not g.user.is_authenticated%}
-                <li><a href="{{ url_for('login') }}">Login</a></li>
-                <li><a href="{{ url_for('register') }}">Register</a></li>
-            {% endif %}
-        </ul>
-    </div>
-    <div>Index</div>
-</body>
-</html>
+{% extends "layout.html" %}
+{% block body %}
+<div class="nav-collapse collapse">
+    <ul class="nav">
+        <li class="active"><a href="/">Home</a></li>
+        {% if g.user.is_authenticated%}
+            <li><a href="/new">New Todo</a></li>
+            <li><a href="{{ url_for('logout') }}">Logout</a></li>
+        {% endif %}
+        {% if not g.user.is_authenticated%}
+            <li><a href="{{ url_for('loginStudent') }}">loginStudent</a></li>
+            <li><a href="{{ url_for('registerStudent') }}">registerStudent</a></li>
+        {% endif %}
+    </ul>
+</div>
+<div>Index</div>
+{% endblock %}
