@@ -1,0 +1,8 @@
+.gitignore
+.git
+db
+.vscode
+vscode
+__pycache__
+venv
+README.txt
