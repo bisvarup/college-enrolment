@@ -1,6 +1,6 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from flask.ext.login import LoginManager
+from flask_login import LoginManager
 from flask_dotenv import DotEnv
 import sys
 
@@ -12,7 +12,7 @@ try:
     db = SQLAlchemy(app)
     print("Connected to database")
 except:
-    print("Error Connecting to database!!")
+    print("Error Connecting to database!")
 
 # Setting up the flask environment from the .flaskenv file
 env = DotEnv()
@@ -27,8 +27,9 @@ login_manager.login_view = 'login'
 '''
 This import is at the bottom to avoid circular dependency
 '''
-from app import routes, User
+from app import routes
+from app import db
 
 @login_manager.user_loader
 def load_user(id):
-    return User.query.get(int(id))
+    return db.User.query.get(int(id))
