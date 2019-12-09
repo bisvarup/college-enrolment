@@ -1,6 +1,7 @@
 from flask import render_template, request, flash, redirect, url_for
-from app import app
-from app import db
+from flask_login import login_user, logout_user
+from app import app, db
+from app import User
 
 
 @app.route("/")
@@ -13,7 +14,7 @@ def register():
     print("request.method %s" % request.method)
     if request.method == 'GET':
         return render_template('register.html')
-    user = db.User(request.form['username'] , request.form['password'],request.form['email'])
+    user = User(request.form['username'] , request.form['password'],request.form['email'])
     db.session.add(user)
     db.session.commit()
     flash('User successfully registered')
@@ -25,7 +26,7 @@ def login():
         return render_template('login.html')
     username = request.form['username']
     password = request.form['password']
-    registered_user = db.User.query.filter_by(username=username,password=password).first()
+    registered_user = User.query.filter_by(username=username,password=password).first()
     if registered_user is None:
         flash('Username or Password is invalid' , 'error')
         return redirect(url_for('login'))
