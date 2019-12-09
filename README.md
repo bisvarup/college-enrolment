@@ -9,7 +9,7 @@
 
 ## Steps
 
-1. . ./venv/bin/activate
+1. ```. ./venv/bin/activate```
 2. ```env FLASK_FILE=collegeEnrolment.py FLASK_ENV=development flask run```
 
 Last Step: ```pip3 freeze > requirements.txt```
