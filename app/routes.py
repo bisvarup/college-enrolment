@@ -9,53 +9,53 @@ from app.database import Student, Teacher
 def index():
     return render_template("index.html")
 
-@app.route('/registerStudent' , methods=['GET','POST'])
+@app.route('/register-student' , methods=['GET','POST'])
 def registerStudent():
     print("request.method %s" % request.method)
     if request.method == 'GET':
-        return render_template('registerStudent.html')
+        return render_template('register-student.html')
     student = Student(request.form['username'] , request.form['password'],request.form['email'])
     db.session.add(student)
     db.session.commit()
     flash('Student successfully registered')
-    return redirect(url_for('loginStudent'))
+    return redirect(url_for('login-student'))
 
-@app.route('/loginStudent',methods=['GET','POST'])
+@app.route('/login-student',methods=['GET','POST'])
 def loginStudent():
     if request.method == 'GET':
-        return render_template('loginStudent.html')
+        return render_template('login-student.html')
     username = request.form['username']
     password = request.form['password']
     registered_student = Student.query.filter_by(username=username,password=password).first()
     if registered_student is None:
         flash('Username or Password is invalid' , 'error')
-        return redirect(url_for('loginStudent'))
+        return redirect(url_for('login-student'))
     login_user(registered_student)
     flash('Logged in successfully')
     return redirect(request.args.get('next') or url_for('index'))
 
 
-@app.route('/registerTeacher' , methods=['GET','POST'])
+@app.route('/register-teacher' , methods=['GET','POST'])
 def registerTeacher():
     print("request.method %s" % request.method)
     if request.method == 'GET':
-        return render_template('registerTeacher.html')
+        return render_template('register-teacher.html')
     teacher = Teacher(request.form['username'] , request.form['password'],request.form['email'])
     db.session.add(teacher)
     db.session.commit()
     flash('Teacher successfully registered')
-    return redirect(url_for('loginTeacher'))
+    return redirect(url_for('login-teacher'))
 
-@app.route('/loginTeacher',methods=['GET','POST'])
+@app.route('/login-teacher',methods=['GET','POST'])
 def loginTeacher():
     if request.method == 'GET':
-        return render_template('loginTeacher.html')
+        return render_template('login-teacher.html')
     username = request.form['username']
     password = request.form['password']
     registered_teacher = Teacher.query.filter_by(username=username,password=password).first()
     if registered_teacher is None:
         flash('Username or Password is invalid' , 'error')
-        return redirect(url_for('loginTeacher'))
+        return redirect(url_for('login-teacher'))
     login_user(registered_teacher)
     flash('Logged in successfully')
     return redirect(request.args.get('next') or url_for('index'))
@@ -64,3 +64,8 @@ def loginTeacher():
 def logout():
     logout_user()
     return redirect(url_for('index'))
+
+
+@app.errorhandler(404)
+def handle404(e):
+    return render_template("404.html")
