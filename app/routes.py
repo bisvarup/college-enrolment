@@ -18,7 +18,7 @@ def registerStudent():
     db.session.add(student)
     db.session.commit()
     flash('Student successfully registered')
-    return redirect(url_for('login-student'))
+    return redirect(url_for('loginStudent'))
 
 @app.route('/login-student',methods=['GET','POST'])
 def loginStudent():
@@ -29,7 +29,7 @@ def loginStudent():
     registered_student = Student.query.filter_by(username=username,password=password).first()
     if registered_student is None:
         flash('Username or Password is invalid' , 'error')
-        return redirect(url_for('login-student'))
+        return redirect(url_for('loginStudent'))
     login_user(registered_student)
     flash('Logged in successfully')
     return redirect(request.args.get('next') or url_for('index'))
@@ -44,7 +44,7 @@ def registerTeacher():
     db.session.add(teacher)
     db.session.commit()
     flash('Teacher successfully registered')
-    return redirect(url_for('login-teacher'))
+    return redirect(url_for('loginTeacher')) 
 
 @app.route('/login-teacher',methods=['GET','POST'])
 def loginTeacher():
@@ -55,7 +55,7 @@ def loginTeacher():
     registered_teacher = Teacher.query.filter_by(username=username,password=password).first()
     if registered_teacher is None:
         flash('Username or Password is invalid' , 'error')
-        return redirect(url_for('login-teacher'))
+        return redirect(url_for('loginTeacher'))
     login_user(registered_teacher)
     flash('Logged in successfully')
     return redirect(request.args.get('next') or url_for('index'))
