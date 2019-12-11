@@ -4,8 +4,8 @@ from app import app, db
 from app.database import Student, Teacher
 
 
-@app.route("/")
 @app.route("/index")
+@app.route("/")
 def index():
     return render_template("index.html")
 
@@ -32,7 +32,11 @@ def loginStudent():
         return redirect(url_for('loginStudent'))
     login_user(registered_student)
     flash('Logged in successfully')
-    return redirect(request.args.get('next') or url_for('index'))
+    return redirect(request.args.get('next') or url_for('studentDashboard'))
+
+@app.route('/student-dashboard')
+def studentDashboard():
+    return render_template('student-dashboard.html')
 
 
 @app.route('/register-teacher' , methods=['GET','POST'])
@@ -44,7 +48,7 @@ def registerTeacher():
     db.session.add(teacher)
     db.session.commit()
     flash('Teacher successfully registered')
-    return redirect(url_for('loginTeacher')) 
+    return redirect(url_for('loginTeacher'))
 
 @app.route('/login-teacher',methods=['GET','POST'])
 def loginTeacher():
@@ -58,7 +62,27 @@ def loginTeacher():
         return redirect(url_for('loginTeacher'))
     login_user(registered_teacher)
     flash('Logged in successfully')
-    return redirect(request.args.get('next') or url_for('index'))
+    return redirect(request.args.get('next') or url_for('teacherDashboard'))
+
+@app.route('/teacher-dashboard')
+def teacherDashboard():
+    return render_template('teacher-dashboard.html')
+
+@app.route('/teacher-dashboard/add-course')
+def addCourse():
+    return render_template('add-course.html')
+
+@app.route('/teacher-dashboard/list-courses')
+def listCourses():
+    return render_template('list-courses.html')
+
+@app.route('/teacher-dashboard/approved-students')
+def approvedStudents():
+    return render_template('approved-students.html')
+
+@app.route('/teacher-dashboard/applied-students')
+def appliedStudents():
+    return render_template('applied-students.html')
 
 @app.route('/logout')
 def logout():

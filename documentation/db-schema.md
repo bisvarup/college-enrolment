@@ -26,6 +26,12 @@
 - password | string
 - registered_on | string
 
+### Courses
+
+- course_id | integer | primary | auto increment
+- course name
+- faculty | string
+
 ### Registration Table
 
 - id | integer | primary | auto increment

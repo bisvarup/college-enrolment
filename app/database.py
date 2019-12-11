@@ -47,6 +47,16 @@ class Teacher(db.Model):
     def __repr__(self):
         return '<User %r>' % (self.username)
 
+class Course(db.Model):
+    course_id = db.Column('id', db.Integer, primary_key=True)
+    course_name = db.Column('course_name', db.String(30), unique=True)
+    # todo: make faculty a foreign key to refer to the teacher table
+    faculty = db.Column('faculty', db.String(30))
+
+    def __init__(self,name, faculty):
+        self.course_name = name
+        self.faculty = faculty
+
 
 class Registration(db.Model):
     id = db.Column('id', db.Integer, primary_key=True)
