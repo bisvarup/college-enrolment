@@ -3,9 +3,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>College Enrolment</title>
+    <title>Course Enrolment</title>
 </head>
 <body>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <b>Note:</b>
+          <div>
+          {% for message in messages %}
+            <p>{{ message }}</p>
+          {% endfor %}
+          </div>
+        {% endif %}
+    {% endwith %}
     {% block body %}{% endblock %}
 </body>
 </html>

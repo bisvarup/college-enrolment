@@ -2,32 +2,32 @@
 {% block body %}
   <form action="" method=post >
     <h1>Register Teacher</h1>
-    <div class="control-group">
-        <div class="controls">
-          <input type="text" id="username" name="username"
+    <div>
+        <div>
+          <input autofocus type="text" id="username" name="username"
             placeholder="Enter Username" value="{{ request.form.username }}"
             required>
         </div>
     </div>
 
-    <div class="control-group">
-        <div class="controls">
+    <div>
+        <div>
           <input type="password" id="password" name="password"
             placeholder="Enter Password" value="{{ request.form.password }}"
             required>
         </div>
     </div>
 
-    <div class="control-group">
-        <div class="controls">
+    <div>
+        <div>
           <input type="email" id="email" name="email"
             placeholder="Enter Email" value="{{ request.form.username }}"
             required>
         </div>
     </div>
 
-    <div class="control-group">
-        <div class="controls">
+    <div>
+        <div>
           <button type="submit" class="btn btn-success">Signup</button>
         </div>
     </div>

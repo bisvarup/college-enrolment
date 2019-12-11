@@ -1,17 +1,22 @@
 {% extends "layout.html" %}
 {% block body %}
-<div class="nav-collapse collapse">
-    <ul class="nav">
-        <li class="active"><a href="/">Home</a></li>
-        {% if g.user.is_authenticated%}
-            <li><a href="/new">New Todo</a></li>
-            <li><a href="{{ url_for('logout') }}">Logout</a></li>
-        {% endif %}
-        {% if not g.user.is_authenticated%}
-            <li><a href="{{ url_for('loginStudent') }}">loginStudent</a></li>
-            <li><a href="{{ url_for('registerStudent') }}">registerStudent</a></li>
-        {% endif %}
-    </ul>
-</div>
-<div>Index</div>
+<article>
+    <h1>Course Enrolment</h1>
+    <section>
+        <div>
+            <ul>
+                <li><a href="{{ url_for('index') }}">Home</a></li>
+                <li><a href="{{ url_for('loginStudent') }}">login-student</a></li>
+                <li><a href="{{ url_for('registerStudent') }}">register-student</a></li>
+                <li><a href="{{ url_for('loginTeacher') }}">login-teacher</a></li>
+                <li><a href="{{ url_for('registerTeacher') }}">register-teacher</a></li>
+                {% if g.user.is_authenticated%}
+                    <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                {% endif %}
+                {% if not g.user.is_authenticated%}
+                {% endif %}
+            </ul>
+        </div>
+    </section>
+</article>
 {% endblock %}
