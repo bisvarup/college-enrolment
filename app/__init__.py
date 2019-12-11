@@ -4,12 +4,18 @@ from flask_login import LoginManager, current_user
 from flask_dotenv import DotEnv
 import datetime
 import sys
+import os
+
+basedir = os.path.join(os.path.abspath(os.path.dirname(__file__)),"../","db")
+db_name = "app.db"
+
+sqlite_conn_string = 'sqlite:///' +  os.path.join(basedir, db_name)
 
 app = Flask(__name__)
 db = None
 try:
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:root@db/db'
-    app.secret_key = 'super secret key'
+    app.config['SQLALCHEMY_DATABASE_URI'] = sqlite_conn_string
+    app.secret_key = '51b3d4102d4d0045edbb97fc2fe3e24a10c18fef6ccbeba221dec0868ee28fe7'
     app.config['SESSION_TYPE'] = 'filesystem'
 
     db = SQLAlchemy(app)

@@ -1,6 +1,5 @@
 .gitignore
 .git
-db
 .vscode
 vscode
 __pycache__
