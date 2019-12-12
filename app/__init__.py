@@ -2,6 +2,7 @@ from flask import Flask, g
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, current_user
 from flask_dotenv import DotEnv
+from flask_migrate import Migrate
 import datetime
 import sys
 import os
@@ -19,6 +20,7 @@ try:
     app.config['SESSION_TYPE'] = 'filesystem'
 
     db = SQLAlchemy(app)
+    migrate = Migrate(app, db)
 except:
     print("Error connecting to database! Terminating script....")
     sys.exit()
