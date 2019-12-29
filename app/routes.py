@@ -1,7 +1,7 @@
 from flask import render_template, request, flash, redirect, url_for
-from flask_login import login_user, logout_user
+from flask_login import login_user, logout_user, current_user
 from app import app, db
-from app.database import Student, Teacher
+from app.database import Student, Teacher, Registration
 from werkzeug.utils import secure_filename
 import sys
 import os
@@ -102,12 +102,32 @@ def studentEnrolment():
 def submitCourse():
     guardian_name = request.form['guardian_name']
     class_10_percentage = request.form['class_10_percentage']
-    class_10_certificate = request.files['class_10_certificate']
-    class_12_percentage=request.form['class_12_percentage']
-    class_12_certificate = request.files['class_12_certificate']
 
-    class_10_certificate.save(os.path.join(app.config['UPLOAD_FOLDER'], secure_filename(class_10_certificate.filename)))
-    class_12_certificate.save(os.path.join(app.config['UPLOAD_FOLDER'], secure_filename(class_12_certificate.filename)))
+    class_10_certificate = request.files['class_10_certificate']
+    class_10_certificate_filename = secure_filename(class_10_certificate.filename)
+
+    class_12_percentage=request.form['class_12_percentage']
+
+    class_12_certificate = request.files['class_12_certificate']
+    class_12_certificate_filename = secure_filename(class_12_certificate.filename)
+
+    '''
+    need student details
+    '''
+    registration = Registration(
+        current_user.id,
+        current_user.username,
+        guardian_name,
+        class_10_percentage,
+        class_12_percentage,
+        class_10_certificate_filename,
+        class_12_certificate_filename)
+
+    db.session.add(registration)
+    db.session.commit()
+
+    class_10_certificate.save(os.path.join(app.config['UPLOAD_FOLDER'], class_10_certificate_filename))
+    class_12_certificate.save(os.path.join(app.config['UPLOAD_FOLDER'], class_12_certificate_filename))
 
     return "OK", 200
 

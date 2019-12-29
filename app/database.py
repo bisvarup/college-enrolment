@@ -61,8 +61,7 @@ class Course(db.Model):
 class Registration(db.Model):
     id = db.Column('id', db.Integer, primary_key=True)
     student_id = db.Column('student_id', db.Integer)
-    full_name = db.Column('full_name', db.String(20))
-    address = db.Column('address', db.String(20))
+    username = db.Column('username', db.String(20))
     guardian_name = db.Column('guardian_name', db.String(20))
     class10_percentage = db.Column('class10_percentage', db.String(5))
     class12_percentage = db.Column('class12_percentage', db.String(5))
@@ -70,16 +69,16 @@ class Registration(db.Model):
     class12_doc = db.Column('class12_doc', db.String(40))
     registration_time = db.Column('registration_time', db.DateTime)
 
-    def __init__(self, student_id,
-    full_name,
-    address,
+    def __init__(self,
+    student_id,
+    username,
     guardian_name,
     class10_percentage,
     class12_percentage,
     class10_doc,
     class12_doc):
         self.student_id = student_id
-        self.full_name = full_name
+        self.username = username
         self.guardian_name = guardian_name
         self.class10_percentage = class10_percentage
         self.class10_doc = class10_doc
