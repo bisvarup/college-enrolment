@@ -10,7 +10,7 @@
     {% for student in data %}
         <tr>
             <td>{{student.username}}</td>
-            <td><button>Generate Report</button></td>
+            <td><button ><a href="{{url_for('static', filename='Student_'+student.username+'_.pdf')}}" target="_blank">Generate Report</a></button></td>
         </tr>
     {% endfor %}
 </table>

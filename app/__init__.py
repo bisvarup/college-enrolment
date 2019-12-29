@@ -13,7 +13,6 @@ basedir = os.path.join(os.path.abspath(os.path.dirname(__file__)),"../","db")
 db_name = "app.db"
 
 sqlite_conn_string = 'sqlite:///' +  os.path.join(basedir, db_name)
-print(sqlite_conn_string)
 
 
 # database configs

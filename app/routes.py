@@ -4,6 +4,7 @@ from app import app, db
 from app.database import Student, Teacher, Registration
 from werkzeug.utils import secure_filename
 from sqlalchemy import update
+from fpdf import FPDF
 import sys
 import os
 
@@ -115,7 +116,7 @@ def appliedStudents():
         print(registration)
         registration.approved = True
         db.session.commit()
-        return "OK"
+        return redirect('/teacher-dashboard/applied-students')
 
 @app.route('/logout')
 def logout():
@@ -158,15 +159,26 @@ def submitCourse():
         class_10_certificate_filename,
         class_12_certificate_filename)
 
-    db.session.add(registration)
-    db.session.commit()
 
     class_10_certificate.save(os.path.join(app.config['UPLOAD_FOLDER'], class_10_certificate_filename))
     class_12_certificate.save(os.path.join(app.config['UPLOAD_FOLDER'], class_12_certificate_filename))
 
+
+    pdf = FPDF()
+    pdf.add_page()
+    pdf.set_font("Arial", size=12)
+    pdf.cell(200, 10, txt="Username "+current_user.username, ln=1, align="L")
+    pdf.cell(200, 15, txt="Guardian Name " + guardian_name, ln=1, align="L")
+    pdf.cell(200, 20, txt="Class 10 percentage " + class_10_percentage, ln=1, align="L")
+    pdf.cell(200, 25, txt="Class 12 percentage" + class_12_percentage, ln=1, align="L")
+
+    pdf.output(os.path.join(app.static_folder,"Student_" + current_user.username +"_.pdf"))
+
+    db.session.add(registration)
+    db.session.commit()
+
     flash('You registered for course')
     return redirect(url_for('studentDashboard'))
-
 
 @app.errorhandler(404)
 def handle404(e):
