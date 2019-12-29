@@ -28,7 +28,7 @@
                     <td>Class 12 document</td>
                     <td><img height="150" src="{{url_for('static', filename=student.class12_doc)}}"/> </td>
                 </tr>
-                <input type="hidden" name="id" value={{student.id}}/>
+                <input type="hidden" value={{student.id}} name="id" />
                 <tr><td colspan="2"><input type="submit" value="approve" /></td></tr>
             </table>
         </form>

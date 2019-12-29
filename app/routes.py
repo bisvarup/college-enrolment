@@ -3,6 +3,7 @@ from flask_login import login_user, logout_user, current_user
 from app import app, db
 from app.database import Student, Teacher, Registration
 from werkzeug.utils import secure_filename
+from sqlalchemy import update
 import sys
 import os
 
@@ -13,8 +14,6 @@ def index():
 
 @app.route('/static/<path>')
 def serve_static(path):
-    root_dir = os.path.dirname(os.getcwd())
-    print('in static ==================',app.static_folder)
     return send_from_directory(app.static_folder,path)
 
 
@@ -93,21 +92,30 @@ def listCourses():
         return redirect('/')
     return render_template('list-courses.html')
 
-@app.route('/teacher-dashboard/approved-students')
+@app.route('/teacher-dashboard/approved-students', methods=['GET', 'POST'])
 def approvedStudents():
-    if current_user.get_id() is None:
-        return redirect('/')
-    approved_students = Registration.query.filter_by(approved=True).all()
-    print(approved_students)
-    return render_template('approved-students.html')
+    if request.method == 'GET':
+        if current_user.get_id() is None:
+            return redirect('/')
+        approved_students = Registration.query.filter_by(approved=True).all()
+        return render_template('approved-students.html', data=approved_students)
+    else:
+        return "OK"
 
-@app.route('/teacher-dashboard/applied-students')
+@app.route('/teacher-dashboard/applied-students', methods=['GET', 'POST'])
 def appliedStudents():
-    if current_user.get_id() is None:
-        return redirect('/')
-    applied_students = Registration.query.filter_by(approved=False).all()
-    print("applied_students", applied_students)
-    return render_template('applied-students.html', data=applied_students)
+    if request.method == 'GET':
+        if current_user.get_id() is None:
+            return redirect('/')
+        applied_students = Registration.query.filter_by(approved=False).all()
+        return render_template('applied-students.html', data=applied_students)
+    else:
+        id = request.form['id']
+        registration = Registration.query.get(int(id))
+        print(registration)
+        registration.approved = True
+        db.session.commit()
+        return "OK"
 
 @app.route('/logout')
 def logout():

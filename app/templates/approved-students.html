@@ -1,4 +1,17 @@
 {% extends "layout.html" %}
 {% block body %}
 <h1>Approved Students</h1>
+
+<table border="1">
+    <thead>
+        <td><b>Name</b></td>
+        <td><b>Action</b></td>
+    </thead>
+    {% for student in data %}
+        <tr>
+            <td>{{student.username}}</td>
+            <td><button>Generate Report</button></td>
+        </tr>
+    {% endfor %}
+</table>
 {% endblock %}
