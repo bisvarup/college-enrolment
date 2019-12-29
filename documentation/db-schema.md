@@ -1,15 +1,5 @@
 # Database design
 
-## Registration Fields
-
-1. First name + Last Name
-2. Full Address
-3. Class 10 percentage
-4. Class 12 percentage
-5. Class 10 pdf upload
-6. Class 12 pdf upload
-7. Guardian name
-
 ## Tables
 
 ### Teacher Table
@@ -37,7 +27,6 @@
 - id | integer | primary | auto increment
 - student_id | integer
 - Full name | string
-- Address | string
 - Guardian Name | string
 - Class 10 percentage | string
 - Class 12 percentage | string

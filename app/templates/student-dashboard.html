@@ -1,4 +1,37 @@
 {% extends "layout.html" %}
 {% block body %}
 <h1>Student Dashboard</h1>
+
+<h2>Course Enrolment</h2>
+<form method="POST" action="/submit-course" enctype="multipart/form-data">
+    <table>
+        <tr>
+            <td><label>Course Name</label></td>
+            <td><input type="text" disabled value="Computer Science" /></td>
+        </tr>
+        <tr>
+            <td><label>Guardian Name</label></td>
+            <td><input type="text" name="guardian_name" /></td>
+        </tr>
+        <tr>
+            <td><label>Class 10 percentage</label></td>
+            <td><input type="text" name="class_10_percentage" /></td>
+        </tr>
+        <tr>
+            <td><label>Class 10 certificate (jpg/jpeg)</label></td>
+            <td><input type="file" name="class_10_certificate" /></td>
+        </tr>
+        <tr>
+            <td><label>Class 12 percentage</label></td>
+            <td><input type="text" name="class_12_percentage" /></td>
+        </tr>
+        <tr>
+            <td><label>Class 12 certificate (jpg/jpeg)</label></td>
+            <td><input type="file" name="class_12_certificate" /></td>
+        </tr>
+        <tr><td colspan="2"><input type="submit" name="submit"/></td></tr>
+    </table>
+</form>
+
+
 {% endblock %}

@@ -6,24 +6,35 @@ from flask_migrate import Migrate
 import datetime
 import sys
 import os
+from werkzeug.utils import secure_filename
+import logging
 
 basedir = os.path.join(os.path.abspath(os.path.dirname(__file__)),"../","db")
 db_name = "app.db"
 
 sqlite_conn_string = 'sqlite:///' +  os.path.join(basedir, db_name)
 
+
+# database configs
 app = Flask(__name__)
 db = None
-try:
-    app.config['SQLALCHEMY_DATABASE_URI'] = sqlite_conn_string
-    app.secret_key = '51b3d4102d4d0045edbb97fc2fe3e24a10c18fef6ccbeba221dec0868ee28fe7'
-    app.config['SESSION_TYPE'] = 'filesystem'
+app.config['SQLALCHEMY_DATABASE_URI'] = sqlite_conn_string
 
-    db = SQLAlchemy(app)
-    migrate = Migrate(app, db)
-except:
-    print("Error connecting to database! Terminating script....")
-    sys.exit()
+# session config
+app.secret_key = '51b3d4102d4d0045edbb97fc2fe3e24a10c18fef6ccbeba221dec0868ee28fe7'
+app.config['SESSION_TYPE'] = 'filesystem'
+
+# migration script
+SQLALCHEMY_TRACK_MODIFICATIONS = False
+db = SQLAlchemy(app)
+migrate = Migrate(app, db)
+
+# upload folder
+UPLOAD_FOLDER = 'static/uploads/'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+# enable debug logging
+logging.basicConfig(level=logging.DEBUG)
 
 # Setting up the flask environment from the .flaskenv file
 env = DotEnv()

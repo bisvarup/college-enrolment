@@ -2,7 +2,9 @@ from flask import render_template, request, flash, redirect, url_for
 from flask_login import login_user, logout_user
 from app import app, db
 from app.database import Student, Teacher
-
+from werkzeug.utils import secure_filename
+import sys
+import os
 
 @app.route("/index")
 @app.route("/")
@@ -95,6 +97,19 @@ def studentEnrolment():
         return render_template('student-enrolment.html')
     else:
         pass
+
+@app.route('/submit-course', methods=['POST'])
+def submitCourse():
+    guardian_name = request.form['guardian_name']
+    class_10_percentage = request.form['class_10_percentage']
+    class_10_certificate = request.files['class_10_certificate']
+    class_12_percentage=request.form['class_12_percentage']
+    class_12_certificate = request.files['class_12_certificate']
+
+    class_10_certificate.save(os.path.join(app.config['UPLOAD_FOLDER'], secure_filename(class_10_certificate.filename)))
+    class_12_certificate.save(os.path.join(app.config['UPLOAD_FOLDER'], secure_filename(class_12_certificate.filename)))
+
+    return "OK", 200
 
 
 @app.errorhandler(404)
