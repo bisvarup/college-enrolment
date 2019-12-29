@@ -1,4 +1,36 @@
 {% extends "layout.html" %}
 {% block body %}
 <h1>Applied Students</h1>
+    {% for student in data %}
+        <form method="POST">
+            <table border>
+                <tr>
+                    <td>Username</td>
+                    <td>{{student.username}}</td>
+                </tr>
+                <tr>
+                    <td>Guardian Name</td>
+                    <td>{{student.guardian_name}}</td>
+                </tr>
+                <tr>
+                    <td>Class 10 percentage</td>
+                    <td>{{student.class10_percentage}}</td>
+                </tr>
+                <tr>
+                    <td>Class 10 document</td>
+                    <td><img height="150" src="{{url_for('static', filename=student.class10_doc)}}"/> </td>
+                </tr>
+                <tr>
+                    <td>Class 12 percentage</td>
+                    <td>{{student.class12_percentage}}</td>
+                </tr>
+                <tr>
+                    <td>Class 12 document</td>
+                    <td><img height="150" src="{{url_for('static', filename=student.class12_doc)}}"/> </td>
+                </tr>
+                <input type="hidden" name="id" value={{student.id}}/>
+                <tr><td colspan="2"><input type="submit" value="approve" /></td></tr>
+            </table>
+        </form>
+    {% endfor %}
 {% endblock %}

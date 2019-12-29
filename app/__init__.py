@@ -17,7 +17,7 @@ print(sqlite_conn_string)
 
 
 # database configs
-app = Flask(__name__)
+app = Flask(__name__, static_folder=os.path.abspath("static/"))
 db = None
 app.config['SQLALCHEMY_DATABASE_URI'] = sqlite_conn_string
 
@@ -31,7 +31,7 @@ db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
 # upload folder
-UPLOAD_FOLDER = 'static/uploads/'
+UPLOAD_FOLDER = 'static/'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 # enable debug logging

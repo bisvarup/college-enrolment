@@ -1,4 +1,4 @@
-from flask import render_template, request, flash, redirect, url_for
+from flask import render_template, request, flash, redirect, url_for, send_from_directory
 from flask_login import login_user, logout_user, current_user
 from app import app, db
 from app.database import Student, Teacher, Registration
@@ -10,6 +10,13 @@ import os
 @app.route("/")
 def index():
     return render_template("index.html")
+
+@app.route('/static/<path>')
+def serve_static(path):
+    root_dir = os.path.dirname(os.getcwd())
+    print('in static ==================',app.static_folder)
+    return send_from_directory(app.static_folder,path)
+
 
 @app.route('/register-student' , methods=['GET','POST'])
 def registerStudent():
@@ -38,6 +45,8 @@ def loginStudent():
 
 @app.route('/student-dashboard')
 def studentDashboard():
+    if current_user.get_id() is None:
+        return redirect('/')
     return render_template('student-dashboard.html')
 
 
@@ -68,26 +77,42 @@ def loginTeacher():
 
 @app.route('/teacher-dashboard')
 def teacherDashboard():
+    if current_user.get_id() is None:
+        return redirect('/')
     return render_template('teacher-dashboard.html')
 
 @app.route('/teacher-dashboard/add-course')
 def addCourse():
+    if current_user.get_id() is None:
+        return redirect('/')
     return render_template('add-course.html')
 
 @app.route('/teacher-dashboard/list-courses')
 def listCourses():
+    if current_user.get_id() is None:
+        return redirect('/')
     return render_template('list-courses.html')
 
 @app.route('/teacher-dashboard/approved-students')
 def approvedStudents():
+    if current_user.get_id() is None:
+        return redirect('/')
+    approved_students = Registration.query.filter_by(approved=True).all()
+    print(approved_students)
     return render_template('approved-students.html')
 
 @app.route('/teacher-dashboard/applied-students')
 def appliedStudents():
-    return render_template('applied-students.html')
+    if current_user.get_id() is None:
+        return redirect('/')
+    applied_students = Registration.query.filter_by(approved=False).all()
+    print("applied_students", applied_students)
+    return render_template('applied-students.html', data=applied_students)
 
 @app.route('/logout')
 def logout():
+    if current_user.get_id() is None:
+        return redirect('/')
     logout_user()
     return redirect(url_for('index'))
 
@@ -111,9 +136,11 @@ def submitCourse():
     class_12_certificate = request.files['class_12_certificate']
     class_12_certificate_filename = secure_filename(class_12_certificate.filename)
 
-    '''
-    need student details
-    '''
+    prevRegistration = Registration.query.filter_by(student_id=current_user.id).first()
+    if prevRegistration is not None:
+        flash('You already applied for course')
+        return redirect(url_for('studentDashboard'))
+
     registration = Registration(
         current_user.id,
         current_user.username,
@@ -129,7 +156,8 @@ def submitCourse():
     class_10_certificate.save(os.path.join(app.config['UPLOAD_FOLDER'], class_10_certificate_filename))
     class_12_certificate.save(os.path.join(app.config['UPLOAD_FOLDER'], class_12_certificate_filename))
 
-    return "OK", 200
+    flash('You registered for course')
+    return redirect(url_for('studentDashboard'))
 
 
 @app.errorhandler(404)

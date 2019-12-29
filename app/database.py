@@ -68,6 +68,7 @@ class Registration(db.Model):
     class10_doc = db.Column('class10_doc', db.String(40))
     class12_doc = db.Column('class12_doc', db.String(40))
     registration_time = db.Column('registration_time', db.DateTime)
+    approved = db.Column('approved', db.Boolean)
 
     def __init__(self,
     student_id,
@@ -85,3 +86,4 @@ class Registration(db.Model):
         self.class12_percentage = class12_percentage
         self.class12_doc = class12_doc
         self.registration_time = datetime.datetime.utcnow()
+        self.approved = False
